@@ -5,12 +5,13 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 import com.example.emill_p1_ap2.data.entities.Division
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DivisionDao{
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Upsert
     suspend fun save(division: Division)
     @Query(""" SELECT * FROM Divisiones WHERE divisionId=:id LIMIT 1""")
     suspend fun find(id: Int) : Division
