@@ -45,34 +45,44 @@ class DivisionViewModel @Inject constructor(private val repository: DivisionRepo
         initialValue = emptyList()
     )
     //
-    private fun isValid():Boolean{
+    private fun isValid(): Boolean {
         isValidNombre = nombre.isNotBlank()
         isValidDividiendo = dividiendo != 0
-        isValidDivisor = divisor != 0
-        isValidCociente = cociente != 0
-        isValidResiduo = residuo != 0
+        isValidDivisor = divisor != 0 && divisor <= dividiendo
+        isValidCociente = cociente >= 0
+        isValidResiduo = residuo <= dividiendo
+
         return isValidNombre && isValidDividiendo && isValidDivisor && isValidCociente && isValidResiduo
     }
+
     //
     fun deleteDivision(division: Division){
         viewModelScope.launch {
-            repository.delete(division)
-            limpiar()
+            try {
+                repository.delete(division)
+                limpiar()
+            } catch (e: Exception) {
+                _isMessageShown.emit(true)
+            }
         }
     }
     //
     fun saveDivision(){
         viewModelScope.launch {
             if(isValid()){
-                val division = Division(
-                    nombre = nombre,
-                    dividiendo = dividiendo,
-                    divisor = divisor,
-                    cociente = cociente,
-                    residuo = residuo
-                )
-                repository.save(division)
-                limpiar()
+                try {
+                    val division = Division(
+                        nombre = nombre,
+                        dividiendo = dividiendo,
+                        divisor = divisor,
+                        cociente = cociente,
+                        residuo = residuo
+                    )
+                    repository.save(division)
+                    limpiar()
+                } catch (e: Exception) {
+                    _isMessageShown.emit(true)
+                }
             }
         }
     }
