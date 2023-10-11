@@ -11,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.emill_p1_ap2.data.dao.DivisionDao
 import com.example.emill_p1_ap2.ui.counterscreen.CounterScreen
 import com.example.emill_p1_ap2.ui.counterscreen.CounterViewModel
 import com.example.emill_p1_ap2.ui.theme.Emill_p1_ap2Theme
@@ -18,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    lateinit var divisionDao: DivisionDao
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

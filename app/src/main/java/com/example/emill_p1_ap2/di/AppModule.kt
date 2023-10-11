@@ -23,4 +23,7 @@ object AppModule {
     ).fallbackToDestructiveMigration().build()
     @Provides
     fun providesDivisionDao(db: DivisionDb) = db.divisionDao()
+    @Singleton
+    @Provides
+    fun providePreferences(@ApplicationContext context: Context) = CounterRepository(context)
 }
