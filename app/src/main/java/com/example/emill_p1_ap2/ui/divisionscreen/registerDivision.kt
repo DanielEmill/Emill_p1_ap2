@@ -164,28 +164,29 @@ fun DivisionesDetails(viewModel: DivisionViewModel) {
     }
 }
 
-////CONSULTA
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun DivisionConsultascreen(viewModel: DivisionViewModel = hiltViewModel()) {
     val divisiones by viewModel.divisores.collectAsState()
-    Scaffold(topBar = {
-        TopAppBar(
-            title = { Text(text = "Historia de resultado") }, modifier = Modifier.fillMaxWidth()
-        )
-    }, content = {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                items(divisiones) { division ->
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "Historia de resultados") },
+            )
+        },
+        content = {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+            ) {
+                item { Spacer(modifier = Modifier.height(22.dp)) }
+                    items(divisiones) { division ->
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp)
+                            .padding(vertical = 16.dp)
                     ) {
                         Column(
                             modifier = Modifier
@@ -193,35 +194,39 @@ fun DivisionConsultascreen(viewModel: DivisionViewModel = hiltViewModel()) {
                                 .padding(16.dp)
                         ) {
                             Text(
-                                text = "Nombre: ${division.nombre}", modifier = Modifier.padding(bottom = 4.dp)
+                                text = "Nombre: ${division.nombre}",
+                                modifier = Modifier.padding(bottom = 4.dp)
                             )
                             Row {
                                 Text(
-                                    text = "Dividiendo: ${division.dividiendo}", modifier = Modifier.padding(end = 8.dp)
+                                    text = "Dividiendo: ${division.dividiendo}",
+                                    modifier = Modifier.padding(end = 8.dp)
                                 )
                                 Text(
-                                    text = "Divisor: ${division.divisor}",
+                                    text = "Divisor: ${division.divisor}"
                                 )
                             }
                             Row {
                                 Text(
-                                    text = "Cociente: ${division.cociente}", modifier = Modifier.padding(end = 8.dp)
+                                    text = "Cociente: ${division.cociente}",
+                                    modifier = Modifier.padding(end = 8.dp)
                                 )
                                 Text(
-                                    text = "Residuo: ${division.residuo}",
+                                    text = "Residuo: ${division.residuo}"
                                 )
                             }
                             OutlinedButton(
                                 onClick = {
                                     viewModel.deleteDivision(division)
-                                }, modifier = Modifier.align(Alignment.End)
+                                },
+                                modifier = Modifier.align(Alignment.End)
                             ) {
                                 Text(text = "Eliminar")
                             }
                         }
                     }
                 }
-            }        }
-    })
+            }
+        }
+    )
 }
-
