@@ -181,7 +181,7 @@ fun DivisionConsultascreen(viewModel: DivisionViewModel = hiltViewModel()) {
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-                item { Spacer(modifier = Modifier.height(22.dp)) }
+                item { Spacer(modifier = Modifier.height(24.dp)) }
                     items(divisiones) { division ->
                     Card(
                         modifier = Modifier
