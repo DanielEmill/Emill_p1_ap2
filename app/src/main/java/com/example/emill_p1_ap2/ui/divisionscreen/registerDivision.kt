@@ -53,6 +53,10 @@ fun ContentColumn(viewModel: DivisionViewModel) {
     ) {
         DivisionesDetails(viewModel)
         SaveButton(viewModel)
+        if (viewModel.errorDivision.isNotEmpty()) {
+            Text(text = viewModel.errorDivision, color = Color.Red)
+        }
+
         DivisionConsultascreen(viewModel)
     }
 }

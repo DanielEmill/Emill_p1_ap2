@@ -30,12 +30,14 @@ class DivisionViewModel @Inject constructor(private val repository: DivisionRepo
     var isValidDivisor by mutableStateOf(true)
     var isValidCociente by mutableStateOf(true)
     var isValidResiduo by mutableStateOf(true)
+    var isValidDivision by mutableStateOf(true)
     //
     //variables para el text
     var errorDividiendo by mutableStateOf("")
     var errorDivisor by mutableStateOf("")
     var errorCociente by mutableStateOf("")
     var errorResiduo by mutableStateOf("")
+    var errorDivision by mutableStateOf("")
 
     private val _isMessageShown = MutableSharedFlow<Boolean>()
     val isMessageShownFlow = _isMessageShown.asSharedFlow()
@@ -55,21 +57,27 @@ class DivisionViewModel @Inject constructor(private val repository: DivisionRepo
         isValidNombre = nombre.isNotBlank()
         isValidDividiendo = dividiendo != 0
         isValidDivisor = divisor != 0 && divisor <= dividiendo
-        isValidCociente = cociente >= 0
-        isValidResiduo = residuo <= dividiendo && residuo != 0
+        isValidCociente = if (divisor != 0) dividiendo / divisor == cociente else false
+        isValidResiduo = if (divisor != 0) dividiendo % divisor == residuo else false
+        isValidDivision = if (divisor != 0) {
+            dividiendo / divisor == cociente && dividiendo % divisor == residuo
+        } else {
+            false
+        }
 
         errorDividiendo = if (isValidDividiendo) "" else "Dividiendo requerido"
         errorDivisor = when {
             !isValidDivisor -> if (divisor == 0) "Divisor requerido" else "Divisor incorrecto"
             else -> ""
         }
-        errorCociente = if (isValidCociente) "" else "Cociente requerido"
+        errorCociente = if (!isValidCociente) "Cociente incorrecto" else ""
         errorResiduo = when {
             !isValidResiduo -> if (residuo == 0) "Residuo requerido" else "Residuo inválido"
             else -> ""
         }
+        errorDivision = if (!isValidDivision) "La división es incorrecta, Favor rellenar los campos con los datos correctos" else ""
 
-        return isValidNombre && isValidDividiendo && isValidDivisor && isValidCociente && isValidResiduo
+        return isValidNombre && isValidDividiendo && isValidDivisor && isValidCociente && isValidResiduo && isValidDivision
     }
 
     //
