@@ -31,6 +31,12 @@ class DivisionViewModel @Inject constructor(private val repository: DivisionRepo
     var isValidCociente by mutableStateOf(true)
     var isValidResiduo by mutableStateOf(true)
     //
+    //variables para el text
+    var errorDividiendo by mutableStateOf("")
+    var errorDivisor by mutableStateOf("")
+    var errorCociente by mutableStateOf("")
+    var errorResiduo by mutableStateOf("")
+
     private val _isMessageShown = MutableSharedFlow<Boolean>()
     val isMessageShownFlow = _isMessageShown.asSharedFlow()
     fun setMessageShown() {
@@ -50,7 +56,18 @@ class DivisionViewModel @Inject constructor(private val repository: DivisionRepo
         isValidDividiendo = dividiendo != 0
         isValidDivisor = divisor != 0 && divisor <= dividiendo
         isValidCociente = cociente >= 0
-        isValidResiduo = residuo <= dividiendo
+        isValidResiduo = residuo <= dividiendo && residuo != 0
+
+        errorDividiendo = if (isValidDividiendo) "" else "Dividiendo requerido"
+        errorDivisor = when {
+            !isValidDivisor -> if (divisor == 0) "Divisor requerido" else "Divisor incorrecto"
+            else -> ""
+        }
+        errorCociente = if (isValidCociente) "" else "Cociente requerido"
+        errorResiduo = when {
+            !isValidResiduo -> if (residuo == 0) "Residuo requerido" else "Residuo inválido"
+            else -> ""
+        }
 
         return isValidNombre && isValidDividiendo && isValidDivisor && isValidCociente && isValidResiduo
     }

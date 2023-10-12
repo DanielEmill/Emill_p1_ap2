@@ -18,6 +18,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
@@ -80,25 +81,23 @@ fun CustomOutlinedTextField(
 @Composable
 fun CustomNumericalOutlinedTextField(
     label: String,
-    value: String,
+    value: Int,
     modifier: Modifier = Modifier,
     isValid: Boolean,
-    onValueChange: (String) -> Unit,
+    onValueChange: (Int) -> Unit,
     imeAction: ImeAction = ImeAction.Done
 ) {
     OutlinedTextField(
-        value = value,
+        value = value.toString(),
         onValueChange = { newValue ->
             val numericValue = newValue.filter { it.isDigit() }
-            onValueChange(numericValue)
+            onValueChange(numericValue.toIntOrNull() ?: 0)
         },
         modifier = modifier.fillMaxWidth(),
         label = { Text(text = label) },
         singleLine = true,
-        textStyle = LocalTextStyle.current.copy(
-            color = if (isValid)
-                Color.Black else Color.Red
-        ),
+        textStyle = LocalTextStyle.current.copy(color = if (isValid)
+            Color.Black else Color.Red),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = if (isValid) Color.Gray else Color.Red,
             unfocusedBorderColor = if (isValid) Color.Gray else Color.Red,
@@ -109,6 +108,7 @@ fun CustomNumericalOutlinedTextField(
         )
     )
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyBar() {

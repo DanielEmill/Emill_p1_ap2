@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.emill_p1_ap2.data.dao.DivisionDao
 import com.example.emill_p1_ap2.ui.counterscreen.CounterScreen
 import com.example.emill_p1_ap2.ui.counterscreen.CounterViewModel
+import com.example.emill_p1_ap2.ui.divisionscreen.divisionScreen
 import com.example.emill_p1_ap2.ui.theme.Emill_p1_ap2Theme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,11 +29,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val viewModel: CounterViewModel =  hiltViewModel()
-                    val counter by viewModel.counter.collectAsState(0)
-                    CounterScreen(
-                        counter = counter,
-                        onIncrement = viewModel::increment)
+                    divisionScreen()
                 }
             }
         }
