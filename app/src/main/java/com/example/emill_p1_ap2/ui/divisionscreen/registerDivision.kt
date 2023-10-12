@@ -220,7 +220,7 @@ fun DivisionConsultascreen(viewModel: DivisionViewModel = hiltViewModel()) {
                                 },
                                 modifier = Modifier.align(Alignment.End)
                             ) {
-                                Text(text = "Eliminar")
+                                Text(text = "X", color = Color.Red, fontWeight = FontWeight.Bold)
                             }
                         }
                     }
